@@ -7,7 +7,7 @@ const Items = (props) => {
          <>
            {props.list.map(item => {
               return (
-                 <List key={item} item={item} />
+                 <List key={item} item={item} handleToggle={props.handleToggle}/>
               )
            })}
          </>

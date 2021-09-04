@@ -2,7 +2,10 @@ import React from 'react';
 
 const List = (props) => {
     return(
-        <li>{props.item.value}</li>
+        <li className={props.item.completed ? 'toggle' : ''}>
+          {props.item.value}
+          <button onClick={() => props.handleToggle(props.item)}>toggle</button>
+        </li>
     )
 }
 
