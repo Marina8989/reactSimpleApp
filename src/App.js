@@ -1,11 +1,13 @@
 import React from 'react';
 import Form from './components/Form';
 import Items from './components/Items';
+import Search from './components/Search';
 import './index.css';
 
 class App extends React.Component{
     state={
-        list: []
+        list: [],
+        searchValue: ''
     }
     handleSubmit = (value) => {
        const item = {
@@ -25,12 +27,21 @@ class App extends React.Component{
        })
        this.setState({list: toggle});
     }
+    handleRemove = (item) => {
+      const remove = this.state.list.filter(el => el.id !== item.id)
+      this.setState({list: remove});
+    }
+    handleSearch = (e) => {
+      this.setState({searchValue: e.target.value })
+    }
     render(){
+      const search = this.state.list.filter(el => el.value.includes(this.state.searchValue));
         return(
             <>
               <h2>Hello</h2>
               <Form handleSubmit={this.handleSubmit}/>
-              <Items list={this.state.list} handleToggle={this.handleToggle}/>
+              <Search handleSearch={this.handleSearch} />
+              <Items list={search} handleToggle={this.handleToggle} handleRemove={this.handleRemove}/>
             </>
         )
     }
