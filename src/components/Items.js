@@ -12,6 +12,7 @@ const Items = (props) => {
                   handleToggle={props.handleToggle} 
                   handleRemove={props.handleRemove}
                   handleSort={props.handleSort}
+                  handleNewSubmit={props.handleNewSubmit}
                   />
               )
            })}

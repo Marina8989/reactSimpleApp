@@ -14,7 +14,6 @@ class Form extends React.Component{
         this.props.handleSubmit(value);
     }
     render(){
-        console.log(this.state.inputValue)
         return(
             <form onSubmit={this.handleSubmit}>
                 <input value={this.props.inputValue} onChange={this.handleChange} style={{border: '1px solid green'}}/>

@@ -64,16 +64,23 @@ class App extends React.Component{
       this.setState({list: priority})
     }
    
+   handleNewSubmit = (item, value) => {
+     const newList = this.state.list.map(element => {
+       if(element.id === item.id) {
+          item.value = value;
+       }
+       return element;
+     })
+     this.setState({list: newList})
+   }
     render(){
-      console.log(this.state.list)
-      console.log(this.state.list.priority)
       const search = this.state.list.filter(el => el.value.includes(this.state.searchValue)).sort((a,b) => {return this.state.sorted ? a.priority - b.priority : b.priority - a.priority})
         return(
             <>
               <h2>Hello</h2>
               <Form handleSubmit={this.handleSubmit}/>
               <Search handleSearch={this.handleSearch} />
-              <Items list={search} handleToggle={this.handleToggle} handleRemove={this.handleRemove} handleSort={this.handleSort}/><br/>
+              <Items list={search} handleToggle={this.handleToggle} handleRemove={this.handleRemove} handleSort={this.handleSort} handleNewSubmit={this.handleNewSubmit}/><br/>
               {this.state.list.length > 0 && <Sort handleClick={this.handleClick} />}
             </>
         )
