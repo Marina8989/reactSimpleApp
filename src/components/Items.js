@@ -8,10 +8,10 @@ const Items = (props) => {
            {props.list.map(item => {
               return (
                  <List 
-                  key={item} item={item}
+                  key={item.id} item={item}
                   handleToggle={props.handleToggle} 
                   handleRemove={props.handleRemove}
-                  handlePriority={props.handlePriority}
+                  handleSort={props.handleSort}
                   />
               )
            })}

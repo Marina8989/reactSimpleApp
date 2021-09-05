@@ -6,7 +6,7 @@ const List = (props) => {
           {props.item.value}
           <button onClick={() => props.handleToggle(props.item)} style={{color: 'green'}}>toggle</button>
           <button onClick={() => props.handleRemove(props.item)} style={{color: 'green'}}>remove</button>
-          <select onChange={props.handlePriority} style={{color: 'green'}}>
+          <select onChange={(e) => props.handleSort(e, props.item)} style={{color: 'green'}}>
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>

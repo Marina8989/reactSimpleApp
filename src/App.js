@@ -14,7 +14,7 @@ class App extends React.Component{
     handleSubmit = (value) => {
        const item = {
            value,
-           id: `${Math.floor(Math.random() * 20)}`,
+           id: `${Math.floor(Math.random() * 50)}`,
            completed: false,
            priority: 0
        }
@@ -37,7 +37,15 @@ class App extends React.Component{
     handleSearch = (e) => {
       this.setState({searchValue: e.target.value })
     }
-    handleSort = () => {
+    handleClick = () => {
+       if(!this.state.sorted) {
+          this.setState({sorted: true})
+       }
+       if(this.state.sorted) {
+          this.setState({sorted: false})
+       }
+    }
+    handleSort = (e, item) => {
       if(this.state.sorted === null){
         this.setState({sorted: true});
       }
@@ -47,22 +55,26 @@ class App extends React.Component{
       if(this.state.sorted === false) {
          this.setState({sorted: null});
       }
+      const priority = this.state.list.map(element => {
+        if(element.id === item.id) {
+            element.priority = Number(e.target.value)
+        }
+        return element;
+      })
+      this.setState({list: priority})
     }
-    handlePriority =() => {
-       console.log('clock')
-       
-    }
+   
     render(){
       console.log(this.state.list)
       console.log(this.state.list.priority)
-      const search = this.state.list.filter(el => el.value.includes(this.state.searchValue));
+      const search = this.state.list.filter(el => el.value.includes(this.state.searchValue)).sort((a,b) => {return this.state.sorted ? a.priority - b.priority : b.priority - a.priority})
         return(
             <>
               <h2>Hello</h2>
               <Form handleSubmit={this.handleSubmit}/>
               <Search handleSearch={this.handleSearch} />
-              <Items list={search} handleToggle={this.handleToggle} handleRemove={this.handleRemove} handlePriority={this.handlePriority}/><br/>
-              {this.state.list.length > 0 && <Sort handleSort={this.handleSort} />}
+              <Items list={search} handleToggle={this.handleToggle} handleRemove={this.handleRemove} handleSort={this.handleSort}/><br/>
+              {this.state.list.length > 0 && <Sort handleClick={this.handleClick} />}
             </>
         )
     }
