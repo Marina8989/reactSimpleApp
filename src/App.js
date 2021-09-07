@@ -11,6 +11,9 @@ class App extends React.Component{
         searchValue: '',
         sorted: null
     }
+    // setInStorage = (list) => {
+    //    window.localStorage.setItem('list', JSON.stringify((list)))
+    // }
     handleSubmit = (value) => {
        const item = {
            value,
@@ -20,6 +23,7 @@ class App extends React.Component{
        }
        const newValue = [...this.state.list, item];
        this.setState({list: newValue});
+      //  this.setInStorage(newValue)
     }
     handleToggle = (item) => {
        const toggle = this.state.list.map(element => {
@@ -29,13 +33,15 @@ class App extends React.Component{
            return element;
        })
        this.setState({list: toggle});
+      //  this.setInStorage(toggle)
     }
     handleRemove = (item) => {
       const remove = this.state.list.filter(el => el.id !== item.id)
       this.setState({list: remove});
+      // this.setInStorage(remove)
     }
     handleSearch = (e) => {
-      this.setState({searchValue: e.target.value })
+      this.setState({searchValue: e.target.value });
     }
     handleClick = () => {
        if(!this.state.sorted) {
@@ -61,7 +67,8 @@ class App extends React.Component{
         }
         return element;
       })
-      this.setState({list: priority})
+      this.setState({list: priority});
+      // this.setInStorage(priority);
     }
    
    handleNewSubmit = (item, value) => {
@@ -71,8 +78,14 @@ class App extends React.Component{
        }
        return element;
      })
-     this.setState({list: newList})
+     this.setState({list: newList});
+    //  this.setInStorage(newList);
    }
+  //  componentDidMount() {
+  //    this.setState({
+  //      list: JSON.parse(window.localStorage.getItem('list')) || []
+  //    })
+  //  }
     render(){
       const search = this.state.list.filter(el => el.value.includes(this.state.searchValue)).sort((a,b) => {return this.state.sorted ? a.priority - b.priority : b.priority - a.priority})
         return(
