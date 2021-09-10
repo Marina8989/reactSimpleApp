@@ -11,9 +11,9 @@ class App extends React.Component{
         searchValue: '',
         sorted: null
     }
-    // setInStorage = (list) => {
-    //    window.localStorage.setItem('list', JSON.stringify((list)))
-    // }
+    setInStorage = (list) => {
+       localStorage.setItem('list', JSON.stringify(list))
+    }
     handleSubmit = (value) => {
        const item = {
            value,
@@ -23,7 +23,7 @@ class App extends React.Component{
        }
        const newValue = [...this.state.list, item];
        this.setState({list: newValue});
-      //  this.setInStorage(newValue)
+       this.setInStorage(newValue)
     }
     handleToggle = (item) => {
        const toggle = this.state.list.map(element => {
@@ -33,12 +33,12 @@ class App extends React.Component{
            return element;
        })
        this.setState({list: toggle});
-      //  this.setInStorage(toggle)
+       this.setInStorage(toggle);
     }
     handleRemove = (item) => {
       const remove = this.state.list.filter(el => el.id !== item.id)
       this.setState({list: remove});
-      // this.setInStorage(remove)
+      this.setInStorage(remove);
     }
     handleSearch = (e) => {
       this.setState({searchValue: e.target.value });
@@ -68,7 +68,7 @@ class App extends React.Component{
         return element;
       })
       this.setState({list: priority});
-      // this.setInStorage(priority);
+      this.setInStorage(priority);
     }
    
    handleNewSubmit = (item, value) => {
@@ -79,21 +79,23 @@ class App extends React.Component{
        return element;
      })
      this.setState({list: newList});
-    //  this.setInStorage(newList);
+     this.setInStorage(newList);
    }
-  //  componentDidMount() {
-  //    this.setState({
-  //      list: JSON.parse(window.localStorage.getItem('list')) || []
-  //    })
-  //  }
+   componentDidMount() {
+     this.setState({
+       list: JSON.parse(localStorage.getItem('list')) || []
+     })
+   }
     render(){
-      const search = this.state.list.filter(el => el.value.includes(this.state.searchValue)).sort((a,b) => {return this.state.sorted ? a.priority - b.priority : b.priority - a.priority})
+      const {list, sorted} = this.state;
+      const newList = list.filter(item => item.value.includes(this.state.searchValue))
+      // const search = this.state.list.filter(el => el.value.includes(this.state.searchValue)).sort((a,b) => {return this.state.sorted ? a.priority - b.priority : b.priority - a.priority})
         return(
             <>
               <h2>Hello</h2>
               <Form handleSubmit={this.handleSubmit}/>
               <Search handleSearch={this.handleSearch} />
-              <Items list={search} handleToggle={this.handleToggle} handleRemove={this.handleRemove} handleSort={this.handleSort} handleNewSubmit={this.handleNewSubmit}/><br/>
+              <Items list={newList} handleToggle={this.handleToggle} handleRemove={this.handleRemove} handleSort={this.handleSort} handleNewSubmit={this.handleNewSubmit}/><br/>
               {this.state.list.length > 0 && <Sort handleClick={this.handleClick} />}
             </>
         )
